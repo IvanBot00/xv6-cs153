@@ -23,3 +23,4 @@
 #define SYS_myexit 22
 #define SYS_mywait 23
 #define SYS_waitpid 24
+#define SYS_debug  25

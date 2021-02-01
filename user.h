@@ -26,6 +26,7 @@ int uptime(void);
 int myexit(int);
 int mywait(int*);
 int waitpid(int, int*, int);
+int debug(void);
 
 // ulib.c
 int stat(const char*, struct stat*);

@@ -668,3 +668,14 @@ waitpid(int _pid, int* _status, int _options)
     sleep(curproc, &ptable.lock);  //DOC: wait-sleep
   }
 }
+
+void
+debug(void)
+{
+  struct proc *curproc = myproc();
+
+  cprintf("\n Name of process: %s\n", curproc->name);
+  cprintf("\n PID: %d\n", curproc->pid);
+}
+
+
