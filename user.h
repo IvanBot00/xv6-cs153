@@ -27,6 +27,7 @@ int myexit(int);
 int mywait(int*);
 int waitpid(int, int*, int);
 int debug(void);
+int setpriority(int);
 
 // ulib.c
 int stat(const char*, struct stat*);
