@@ -34,16 +34,16 @@ int PScheduler(void){
     else if ( pid == 0) {
       setpriority(30-10*i);	
       for (j=0;j<50000;j++) {
-	for(k=0;k<1000;k++) {
+	for(k=0;k<3000;k++) {
 	  asm("nop"); 
 	}
       }
       printf(1, "\n child# %d with priority %d has finished! \n",getpid(),30-10*i);		
       exit();
     }
-      else {
-	printf(2," \n Error \n");		
-        }
+    else {
+      printf(2," \n Error \n");		
+    }
   }
 
   if(pid > 0) {

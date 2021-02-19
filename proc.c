@@ -324,32 +324,32 @@ wait(void)
 void
 scheduler(void)
 {
-  struct proc *p, *procPriority;
+  struct proc *p;
   struct cpu *c = mycpu();
   c->proc = 0;
+
+  int highestP;
 
   for(;;){
     // Enable interrupts on this processor.
     sti();
 
-    acquire(&ptable.lock);
+    highestP = 32;
 
-    procPriority = 0;	
+    acquire(&ptable.lock);
   
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->state != RUNNABLE)
 	continue;
-      procPriority = p;
-      break;
+      if(p->priority < highestP)
+	highestP = p->priority;
     }
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->state != RUNNABLE)
         continue;
-      if(p->priority < procPriority->priority)
-	procPriority = p;
-    }
-    if(procPriority){
-      p = procPriority;
+      if(p->priority != highestP)
+	continue;
+
       // Switch to chosen process.  It is the process's job
       // to release ptable.lock and then reacquire it
       // before jumping back to us.
