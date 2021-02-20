@@ -334,10 +334,9 @@ scheduler(void)
     // Enable interrupts on this processor.
     sti();
 
+    acquire(&ptable.lock);
     highestP = 32;
 
-    acquire(&ptable.lock);
-  
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->state != RUNNABLE)
 	continue;
@@ -347,9 +346,11 @@ scheduler(void)
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->state != RUNNABLE)
         continue;
-      if(p->priority != highestP)
+      if(p->priority != highestP){
+        //setpriority(++p->priority);
 	continue;
-
+      }
+      //setpriority(--p->priority);
       // Switch to chosen process.  It is the process's job
       // to release ptable.lock and then reacquire it
       // before jumping back to us.
@@ -687,8 +688,9 @@ debug(void)
 {
   struct proc *curproc = myproc();
 
-  cprintf("\n Name of process: %s\n", curproc->name);
+  //cprintf("\n Name of process: %s\n", curproc->name);
   cprintf("\n PID: %d\n", curproc->pid);
+  cprintf("\n Priority: %d\n", curproc->priority);
 }
 
 void
@@ -701,7 +703,7 @@ setpriority(int _priority)
   if(_priority > 31)
     _priority = 31;
 
-  acquire(&ptable.lock);
+  //acquire(&ptable.lock);
   curproc->priority = _priority;
-  release(&ptable.lock);
+  //release(&ptable.lock);
 }

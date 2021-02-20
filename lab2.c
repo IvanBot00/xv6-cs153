@@ -25,7 +25,6 @@ int PScheduler(void){
   printf(1, "\n  Step 2: 0 is the highest priority. All processes have a default priority of 10\n");
   printf(1, "\n  Step 2: The parent processes will switch to priority 0\n");
   setpriority(0);
-
   for (i = 0; i <  3; i++) {
     pid = fork();
     if (pid > 0 ) {
@@ -38,6 +37,7 @@ int PScheduler(void){
 	  asm("nop"); 
 	}
       }
+      //debug();
       printf(1, "\n child# %d with priority %d has finished! \n",getpid(),30-10*i);		
       exit();
     }
@@ -52,7 +52,6 @@ int PScheduler(void){
     }
   printf(1,"\n if processes with highest priority finished first then its correct \n");
   }
-	
   exit();		
   return 0;
 }
