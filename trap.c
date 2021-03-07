@@ -77,7 +77,24 @@ trap(struct trapframe *tf)
             cpuid(), tf->cs, tf->eip);
     lapiceoi();
     break;
+  case T_PGFLT: ;
+    uint fault_addr = rcr2();
+    uint old_bot = STACKTOP - (PGSIZE * myproc()->numPages);
+    uint new_bot = STACKTOP - (PGSIZE * (myproc()->numPages + 1));
 
+   if (old_bot > fault_addr && fault_addr > new_bot) {
+     if (allocuvm(myproc()->pgdir, new_bot, old_bot) == 0) {
+       panic("Failed to alloc inside T_PGFLT");
+     }
+     myproc()->numPages++;
+     cprintf("Increased number of pages\n");
+   }
+   else {
+     panic("T_PGFLT: Fault occured out of bounds");
+   }
+
+
+    break;
   //PAGEBREAK: 13
   default:
     if(myproc() == 0 || (tf->cs&3) == 0){

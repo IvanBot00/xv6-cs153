@@ -338,10 +338,6 @@ copyuvm(pde_t *pgdir, uint sz, uint numPages)
     }
   }
   uint botAddr = STACKTOP - (numPages * PGSIZE) + 4;
-  //uint botAddrReplace = myproc()->stackBottomAddr;
-
-  //cprintf("page: %d\n", botAddr);
-  //cprintf("copy: %d\n", botAddrReplace);
 
   for(i = botAddr; i < STACKTOP; i += PGSIZE){
     if((pte = walkpgdir(pgdir, (void *) i, 0)) == 0)

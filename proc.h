@@ -52,7 +52,6 @@ struct proc {
   int status;		       // Saves exit status of process
   int priority;		       // Saves the priority of process 0-31
   uint numPages;	       // Saves the number of pages
-  uint stackBottomAddr;        // Stores addr of where pages in stack are
 };
 
 // Process memory is laid out contiguously, low addresses first:

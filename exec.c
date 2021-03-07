@@ -71,7 +71,6 @@ exec(char *path, char **argv)
   curproc->numPages = 1;
   //clearpteu(pgdir, (char*)(sz - 2*PGSIZE));
   sp = STACKTOP;
-  curproc->stackBottomAddr = (uint)PGROUNDDOWN(STACKTOP);
 
   // Push argument strings, prepare rest of stack in ustack.
   for(argc = 0; argv[argc]; argc++) {
